@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			.box {
+				position: fixed;
+				top: 0;
+				left: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<img src="img/run.gif">
+		</div>
+		<script type="text/javascript">
+			var box = document.querySelector('.box')
+			var up = false;
+			var down = false;
+			var left = false;
+			var right = false;
+			var sd = 5;
+
+			window.onkeydown = function(e) {
+				if (e.keyCode == 65 || e.keyCode == 37) {
+					box.style.transform = 'scale(-1,1)'
+					left = true
+				}
+				if (e.keyCode == 87 || e.keyCode == 38) {
+					up = true
+				}
+				if (e.keyCode == 68 || e.keyCode == 39) {
+					right = true
+					box.style.transform = 'scale(1,1)'
+				}
+				if (e.keyCode == 83 || e.keyCode == 40) {
+					down = true
+				}
+				if (e.code == 'Space') {
+					var temp = document.createElement('span')
+					temp.innerText = '💩'
+					temp.style.position = 'fixed'
+					temp.style.fontSize = '50px'
+					temp.style.zIndex = -1
+
+
+
+					temp.style.top = parseInt(getComputedStyle(box).top) + box.offsetHeight / 2 + 'px'
+					temp.style.left = parseInt(getComputedStyle(box).left) + box.offsetWidth / 2 + 'px'
+
+
+
+					document.body.appendChild(temp)
+				}
+			}
+
+			window.onkeyup = function(e) {
+				if (e.keyCode == 65 || e.keyCode == 37) {
+					left = false
+				}
+				if (e.keyCode == 87 || e.keyCode == 38) {
+					up = false
+				}
+				if (e.keyCode == 68 || e.keyCode == 39) {
+					right = false
+				}
+				if (e.keyCode == 83 || e.keyCode == 40) {
+					down = false
+				}
+			}
+
+			setInterval(function() {
+				if (up) {
+					box.style.top = parseInt(getComputedStyle(box).top) - sd + 'px'
+				}
+				if (down) {
+					box.style.top = parseInt(getComputedStyle(box).top) + sd + 'px'
+				}
+				if (left) {
+					box.style.left = parseInt(getComputedStyle(box).left) - sd + 'px'
+				}
+				if (right) {
+					box.style.left = parseInt(getComputedStyle(box).left) + sd + 'px'
+				}
+
+
+
+				if (parseInt(getComputedStyle(box).top) <= 0) {
+					box.style.top = 0
+				}
+				if (parseInt(getComputedStyle(box).left) <= 0) {
+					box.style.left = 0;
+				}
+				if (parseInt(getComputedStyle(box).top) >= window.innerHeight - box.offsetHeight) {
+					box.style.top = window.innerHeight - box.offsetHeight + 'px '
+				}
+				if (parseInt(getComputedStyle(box).left) >= window.innerWidth - box.offsetWidth) {
+					box.style.left = window.innerWidth - box.offsetWidth + 'px'
+				}
+			}, 10)
+		</script>
+	</body>
+</html>
